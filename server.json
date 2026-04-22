@@ -1,0 +1,43 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Evozim/m2mcent",
+  "description": "x402 payment wrapper for AI Agents and MCP Servers. USDC settlements on Base L2.",
+  "repository": {
+    "url": "https://github.com/Evozim/m2mcent-sdk",
+    "source": "github"
+  },
+  "version": "1.0.2",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "m2mcent-sdk",
+      "version": "1.0.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "Base Mainnet RPC endpoint URL",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": false,
+          "name": "BASE_RPC_URL"
+        },
+        {
+          "description": "Relayer wallet private key for on-chain settlement",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true,
+          "name": "RELAYER_PRIVATE_KEY"
+        },
+        {
+          "description": "Treasury wallet address to receive payments",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": false,
+          "name": "TREASURY_ADDRESS"
+        }
+      ]
+    }
+  ]
+}
