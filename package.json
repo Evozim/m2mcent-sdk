@@ -1,0 +1,29 @@
+{
+  "name": "m2mcent-sdk",
+  "version": "1.0.0",
+  "description": "Ultra-lightweight x402 payment wrapper for AI Agents and MCP Servers.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "m2m",
+    "x402",
+    "payments",
+    "ai",
+    "agents",
+    "mcp",
+    "base",
+    "usdc"
+  ],
+  "author": "M2MCent Architecture",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.11.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
