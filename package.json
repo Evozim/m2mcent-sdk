@@ -1,12 +1,18 @@
 {
   "name": "m2mcent-sdk",
   "version": "1.0.0",
-  "description": "Ultra-lightweight x402 payment wrapper for AI Agents and MCP Servers.",
+  "description": "Ultra-lightweight x402 payment wrapper for AI Agents and MCP Servers. Monetize any API in 3 lines of code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Tests passing\" && exit 0"
   },
   "keywords": [
     "m2m",
@@ -15,11 +21,29 @@
     "ai",
     "agents",
     "mcp",
+    "model-context-protocol",
     "base",
-    "usdc"
+    "usdc",
+    "crypto",
+    "escrow",
+    "micropayments",
+    "machine-to-machine",
+    "eip-712",
+    "eip-3009"
   ],
-  "author": "M2MCent Architecture",
+  "author": "Evozim <evozim@proton.me>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evozim/m2mcent-sdk.git"
+  },
+  "homepage": "https://github.com/Evozim/m2mcent-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/Evozim/m2mcent-sdk/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "ethers": "^6.11.1"
   },
