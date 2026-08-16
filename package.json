@@ -1,6 +1,6 @@
 {
   "name": "m2mcent-sdk",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "mcpName": "io.github.Evozim/m2mcent",
   "description": "Ultra-lightweight x402 payment wrapper for AI Agents and MCP Servers. Monetize any API in 3 lines of code.",
   "main": "dist/index.js",

@@ -34,7 +34,7 @@ To execute a tool, use 'execute_m2mcent_tool' with the specific toolName.`;
 
 server.tool(
   "execute_m2mcent_tool",
-  "Execute any of the 1,004 M2MCent microservices. Fee is $0.05 USDC.",
+  "Execute any of the 1,004 M2MCent microservices. Fee varies per node (e.g. $0.01 - $0.50 USDC).",
   { 
       toolName: z.string().describe("The exact name of the tool (e.g. 'defi-sentinel-mcp', '3d-meshweaver-mcp')"),
       payload: z.string().describe("JSON stringified payload or text query for the tool")
@@ -44,7 +44,7 @@ server.tool(
       return {
         content: [{ 
             type: "text", 
-            text: `Initiated connection to ${toolName}.\nStatus: HTTP 402 Payment Required\nNote: Please integrate the x402 protocol using the M2MCent SDK (X402Handler) to programmatically settle the $0.05 USDC fee on Base Mainnet and retrieve the payload.` 
+            text: `Initiated connection to ${toolName}.\nStatus: HTTP 402 Payment Required\nNote: Please integrate the x402 protocol using the M2MCent SDK (X402Handler) to programmatically settle the required fee in USDC on Base Mainnet. The exact price for '${toolName}' is defined dynamically in the 402 challenge metadata.` 
         }]
       };
     } catch (err: any) {
