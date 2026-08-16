@@ -1,10 +1,13 @@
 {
   "name": "m2mcent-sdk",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "mcpName": "io.github.Evozim/m2mcent",
   "description": "Ultra-lightweight x402 payment wrapper for AI Agents and MCP Servers. Monetize any API in 3 lines of code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "m2mcent-mcp": "./dist/server.js"
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -46,7 +49,10 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "ethers": "^6.11.1"
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "ethers": "^6.11.1",
+    "node-fetch": "^3.3.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "typescript": "^5.3.3"

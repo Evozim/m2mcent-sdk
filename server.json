@@ -6,14 +6,16 @@
     "url": "https://github.com/Evozim/m2mcent-sdk",
     "source": "github"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "m2mcent-sdk",
-      "version": "1.0.2",
+      "version": "1.0.4",
       "transport": {
-        "type": "stdio"
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "m2mcent-sdk"]
       },
       "environmentVariables": [
         {
