@@ -66,7 +66,7 @@ Agent ◄── Premium Response + tx hash
 |:---|:---|
 | **Network** | Base Mainnet (Chain ID: 8453) |
 | **USDC Contract** | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
-| **Escrow Contract** | `0xf3c3416A843d13C944554A54Ac274BB7fF264BcC` |
+| **Escrow Contract** | `0x5d47070A36A37DAf417e64FF27a1e5B3F1c84efa` |
 | **Settlement** | Atomic, sub-second finality |
 
 ## 🧩 MCP Server Integration

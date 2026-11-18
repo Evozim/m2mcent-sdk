@@ -3,49 +3,51 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
+const GATEWAY_URL = (process.env.M2MCENT_GATEWAY_URL || "https://api.m2mcent.com").replace(/\/+$/, "");
+
 const server = new McpServer({
   name: "M2MCent Universal Gateway",
-  version: "1.0.4"
+  version: "1.0.7"
 });
 
 server.tool(
   "search_m2mcent_catalog",
-  "Search the M2MCent Universal Catalog of 1,004+ Agentic Services",
+  "Search the M2MCent Universal Catalog of 1,062 Agentic Services",
   { 
-      query: z.string().describe("Keyword to search for in the catalog (e.g. 'pdf', 'crypto', 'vision')") 
+      query: z.string().describe("Keyword to search for in the catalog (e.g. 'adsb', 'crypto', 'kyt')") 
   },
   async ({ query }) => {
     try {
-      // In a real scenario, this would query https://api.m2mcent.com/mcp
-      // We return a mock response summarizing the capability.
-      const catalogInfo = `M2MCent Catalog Search for '${query}':
-M2MCent is a Universal Gateway to 1,004+ microservices on the x402 protocol.
-Please visit https://m2mcent.com or https://github.com/Evozim/m2mcent to see the full list of tools.
-To execute a tool, use 'execute_m2mcent_tool' with the specific toolName.`;
-
+      const res = await fetch(`${GATEWAY_URL}/api/v1/search?q=${encodeURIComponent(query)}`);
+      const data: any = await res.json();
       return {
-        content: [{ type: "text", text: catalogInfo }]
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }]
       };
     } catch (err: any) {
-      return { isError: true, content: [{ type: "text", text: "Error: " + err.message }] };
+      return { isError: true, content: [{ type: "text", text: "Error querying M2MCent catalog: " + err.message }] };
     }
   }
 );
 
 server.tool(
   "execute_m2mcent_tool",
-  "Execute any of the 1,004 M2MCent microservices. Fee varies per node (e.g. $0.01 - $0.50 USDC).",
+  "Execute or dry-run preview any of the 1,062 M2MCent microservices ($0.005 - $0.250 USDC via x402 V2 on Base Mainnet).",
   { 
-      toolName: z.string().describe("The exact name of the tool (e.g. 'defi-sentinel-mcp', '3d-meshweaver-mcp')"),
-      payload: z.string().describe("JSON stringified payload or text query for the tool")
+      toolName: z.string().describe("The exact tool slug (e.g. 'adsb-flight-tracker-mcp', 'gas-pulse-mcp')"),
+      payload: z.string().describe("JSON stringified payload for the tool"),
+      paymentSignature: z.string().optional().describe("Optional Base64 x402 Payment-Signature header")
   },
-  async ({ toolName, payload }) => {
+  async ({ toolName, payload, paymentSignature }) => {
     try {
+      const slug = encodeURIComponent(toolName.trim());
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (paymentSignature) headers["Payment-Signature"] = paymentSignature;
+      const endpoint = paymentSignature ? `${GATEWAY_URL}/${slug}/api/process` : `${GATEWAY_URL}/${slug}/preview`;
+      const res = await fetch(endpoint, { method: "POST", headers, body: payload || "{}" });
+      const text = await res.text();
       return {
-        content: [{ 
-            type: "text", 
-            text: `Initiated connection to ${toolName}.\nStatus: HTTP 402 Payment Required\nNote: Please integrate the x402 protocol using the M2MCent SDK (X402Handler) to programmatically settle the required fee in USDC on Base Mainnet. The exact price for '${toolName}' is defined dynamically in the 402 challenge metadata.` 
-        }]
+        isError: res.status >= 400 && res.status !== 402,
+        content: [{ type: "text", text: JSON.stringify({ status: res.status, endpoint, body: text, paymentRequiredHeader: res.headers.get("payment-required") || null }, null, 2) }]
       };
     } catch (err: any) {
       return { isError: true, content: [{ type: "text", text: "Error: " + err.message }] };
